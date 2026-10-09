@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MortgageApp());
@@ -18,11 +18,10 @@ class MortgageApp extends StatelessWidget {
   }
 }
 
-// Model class
 class Mortgage {
   double amount = 100000;
   int years = 30;
-  double rate = 0.035; // 3.5%
+  double rate = 0.035;
 
   double monthlyPayment() {
     int numberOfPayments = years * 12;
@@ -37,7 +36,10 @@ class Mortgage {
 
     double monthlyRate = rate / 12;
 
-    return amount * monthlyRate / (1 - (1 / pow(1 + monthlyRate, numberOfPayments)));
+    double power =
+    pow(1 + monthlyRate, numberOfPayments).toDouble();
+
+    return amount * monthlyRate / (1 - (1 / power));
   }
 
   double totalPayment() {
@@ -118,7 +120,8 @@ class _MortgageHomePageState extends State<MortgageHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mortgage Calculator'),
-        backgroundColor: Colors.green[100],
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -258,6 +261,8 @@ class _ModifyScreenState extends State<ModifyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Modify Mortgage'),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -304,6 +309,12 @@ class _ModifyScreenState extends State<ModifyScreen> {
                   double rateDecimal = ratePercent / 100;
 
                   return RadioListTile<double>(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    visualDensity:
+                    const VisualDensity(vertical: -3),
+                    materialTapTargetSize:
+                    MaterialTapTargetSize.shrinkWrap,
                     title: Text(
                       '${ratePercent.toStringAsFixed(2)}%',
                     ),
